@@ -70,17 +70,18 @@ client.on("interactionCreate", async (interaction) => {
       );
 
     } catch (err) {
-      console.log("WALLET ERROR:", err);
+  console.log("🔥 WALLET FULL ERROR:", err);
+  console.log("STACK:", err.stack);
 
-      if (interaction.deferred) {
-        return interaction.editReply("❌ Wallet error occurred");
-      } else {
-        return interaction.reply({
-          content: "❌ Wallet error occurred",
-          ephemeral: true
-        });
-      }
-    }
+  if (interaction.deferred || interaction.replied) {
+    return interaction.editReply("❌ Wallet error: " + err.message);
+  } else {
+    return interaction.reply({
+      content: "❌ Wallet error: " + err.message,
+      ephemeral: true
+    });
+  }
+}
   }
 
 
